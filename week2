@@ -1,0 +1,11 @@
+// sql.ErrNoRows 异常直接返回nil
+// 其它sql异常做wrap
+func (dao ConfigInfoDao) SelectByGroupCode(code string) (*entities.ConfigInfoEntity, error) {
+	entity := &entities.ConfigInfoEntity{}
+	_sql := "SELECT * FROM place ORDER BY telcode ASC"
+	if err := dao.Get(entity, _sql); err == sql.ErrNoRows {
+		return nil,nil
+	}else {
+		return nil,errors.Wrapf(err, "sql error: %s", _sql)
+	}
+}
